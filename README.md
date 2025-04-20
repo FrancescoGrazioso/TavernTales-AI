@@ -56,7 +56,7 @@ Legend: ✅ done 🚧 in progress ⏳ planned
 | **Database** | PostgreSQL 15 |
 | **Realtime** | Redis 7 (pub/sub) |
 | **AI** | Google Gemini API |
-| **DevOps** | Docker, GitHub Actions, Fly.io |
+| **DevOps** | GitHub Actions, Fly.io |
 | **Observability** | Prometheus, Grafana, Loki |
 | **Testing** | pytest, pytest‑django, Locust |
 
@@ -104,7 +104,6 @@ wscat -c ws://127.0.0.1:8000/ws/session/1/
 | `pytest -q` | run unit & integration tests |
 | `ruff check .` | linting |
 | `pip‑compile` | update lockfiles |
-| `docker compose up` | full stack (Postgres, Redis, app) |
 
 Pre‑commit hooks enforce formatting (`black`, `isort`, `ruff`) and tests.
 
