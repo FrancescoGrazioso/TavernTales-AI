@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenv
+.venv/
+env/
+venv/
+
+# Django & local DB
+*.sqlite3
+db.sqlite3
+/media/
+
+# Environment variables & secrets
+.env
+*.env
+
+# Logs
+*.log
+
+# Coverage & testing
+htmlcov/
+.coverage
+.cache/
+.pytest_cache/
+.mypy_cache/
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.sw?
+
+# macOS
+.DS_Store
+
+# Node / Frontend extras
+node_modules/
+
+# Docker artifacts
+*.pid

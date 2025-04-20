@@ -1,0 +1,10 @@
+# requirements.in
+Django>=4.2,<5
+djangorestframework
+djangorestframework-simplejwt
+psycopg[binary]
+django-environ
+django-filter
+channels
+channels-redis
+daphne

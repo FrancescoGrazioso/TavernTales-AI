@@ -1,0 +1,9 @@
+# requirements-dev.in
+-r requirements.in
+pytest
+pytest-django
+pytest-cov
+factory-boy
+black
+isort
+mypy
