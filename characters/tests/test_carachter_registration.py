@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from users.models import User
 from characters.models import Character
 
+
 @pytest.fixture
 def auth_client(db):
     """
@@ -16,13 +17,16 @@ def auth_client(db):
 
     # ottieni token JWT
     token_url = reverse("login")  # alias di TokenObtainPairView
-    resp = client.post(token_url, {"username": username, "password": password}, format="json")
+    resp = client.post(
+        token_url, {"username": username, "password": password}, format="json"
+    )
     assert resp.status_code == 200, resp.data
     token = resp.data["access"]
 
     # imposta header Authorization
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
     return client, user
+
 
 @pytest.mark.django_db
 def test_create_character(auth_client):

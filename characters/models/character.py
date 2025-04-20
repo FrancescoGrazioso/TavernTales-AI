@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 
+
 class Character(models.Model):
     """Scheda D&D 5e semplificata, estensibile in futuro."""
 
@@ -32,7 +33,9 @@ class Character(models.Model):
     ]
 
     # chiave esterna all’utente proprietario
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="characters")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="characters"
+    )
 
     # dati anagrafici
     name = models.CharField(max_length=60)

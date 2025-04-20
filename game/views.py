@@ -2,9 +2,11 @@ from rest_framework import viewsets, permissions, decorators, response, status
 from .models import Party, Session
 from .serializers import PartySerializer, SessionSerializer
 
+
 class IsOwnerOrMember(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return request.user == obj.owner or request.user in obj.members.all()
+
 
 class PartyViewSet(viewsets.ModelViewSet):
     serializer_class = PartySerializer
@@ -18,6 +20,7 @@ class PartyViewSet(viewsets.ModelViewSet):
         party = self.get_object()
         return response.Response({"invite_code": party.invite_code})
 
+
 class JoinPartyView(viewsets.ViewSet):
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -29,7 +32,10 @@ class JoinPartyView(viewsets.ViewSet):
             party.members.add(request.user)
             return response.Response({"detail": "Joined"}, status=status.HTTP_200_OK)
         except Party.DoesNotExist:
-            return response.Response({"detail": "Invalid code"}, status=status.HTTP_404_NOT_FOUND)
+            return response.Response(
+                {"detail": "Invalid code"}, status=status.HTTP_404_NOT_FOUND
+            )
+
 
 class SessionViewSet(viewsets.ModelViewSet):
     serializer_class = SessionSerializer

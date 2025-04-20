@@ -3,6 +3,7 @@ from django.db import models
 
 from game.models.party import Party
 
+
 class Session(models.Model):
     STATUS = [
         ("planning", "Planning"),
@@ -12,7 +13,9 @@ class Session(models.Model):
     ]
     party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name="sessions")
     status = models.CharField(max_length=10, choices=STATUS, default="planning")
-    current_turn = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL)
+    current_turn = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
+    )
     ai_context_id = models.CharField(max_length=100, blank=True)
     summary_cache = models.TextField(blank=True)
     started_at = models.DateTimeField(null=True, blank=True)

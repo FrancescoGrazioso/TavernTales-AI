@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Character
 
+
 class CharacterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Character
@@ -24,7 +25,9 @@ class CharacterSerializer(serializers.ModelSerializer):
         ):
             score = attrs.get(ability, getattr(self.instance, ability, 10))
             if not 1 <= score <= 30:
-                raise serializers.ValidationError({ability: "Ability scores must be 1‑30"})
+                raise serializers.ValidationError(
+                    {ability: "Ability scores must be 1‑30"}
+                )
         return attrs
 
     def create(self, validated_data):

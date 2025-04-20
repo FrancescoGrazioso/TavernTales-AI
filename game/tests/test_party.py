@@ -3,6 +3,7 @@ from rest_framework.test import APIClient
 from users.models import User
 from game.models import Party
 
+
 @pytest.fixture
 def api_client(db):
     """
@@ -15,8 +16,11 @@ def api_client(db):
 
     # Ottieni un token JWT dall'endpoint di login
     from django.urls import reverse
+
     token_url = reverse("login")  # TokenObtainPairView registrato come "login"
-    resp = client.post(token_url, {"username": username, "password": password}, format="json")
+    resp = client.post(
+        token_url, {"username": username, "password": password}, format="json"
+    )
     assert resp.status_code == 200, resp.data
     token = resp.data["access"]
 
@@ -24,9 +28,12 @@ def api_client(db):
     client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
     return client, user
 
+
 @pytest.mark.django_db
 def test_create_party(api_client):
     client, user = api_client
-    resp = client.post("/api/parties/", {"name": "Compagnia dell'Anello"}, format="json")
+    resp = client.post(
+        "/api/parties/", {"name": "Compagnia dell'Anello"}, format="json"
+    )
     assert resp.status_code == 201
     assert Party.objects.filter(owner=user).exists()
