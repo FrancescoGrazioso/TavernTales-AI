@@ -121,6 +121,8 @@ pytest-django==4.11.1
     # via -r requirements-dev.in
 redis==5.2.1
     # via channels-redis
+ruff==0.11.6
+    # via -r requirements-dev.in
 service-identity==24.2.0
     # via twisted
 sqlparse==0.5.3

@@ -7,3 +7,4 @@ factory-boy
 black
 isort
 mypy
+ruff
