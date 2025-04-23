@@ -45,7 +45,7 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Session.objects.filter(party__members=self.request.user)
-    
+
 
 class ChatHistoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     serializer_class = ChatMessageSerializer
@@ -55,6 +55,5 @@ class ChatHistoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self):
         session_id = self.kwargs["session_id"]
         return ChatMessage.objects.filter(
-            session__id=session_id,
-            session__party__members=self.request.user
+            session__id=session_id, session__party__members=self.request.user
         )

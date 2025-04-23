@@ -1,17 +1,22 @@
 from django.conf import settings
 from django.db import models
 
+
 class ChatMessage(models.Model):
     """
     Stores every message exchanged in a Session.
     For AI messages `sender` is NULL.
     """
+
     session = models.ForeignKey(
         "game.Session", on_delete=models.CASCADE, related_name="messages"
     )
     sender = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, blank=True,
-        on_delete=models.SET_NULL, related_name="chat_messages"
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="chat_messages",
     )
     content = models.TextField()
     roll_info = models.JSONField(blank=True, null=True)

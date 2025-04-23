@@ -43,7 +43,11 @@ class SessionChatConsumer(AsyncWebsocketConsumer):
         if not content:
             return
 
-        sender = None if isinstance(self.scope["user"], AnonymousUser) else self.scope["user"]
+        sender = (
+            None
+            if isinstance(self.scope["user"], AnonymousUser)
+            else self.scope["user"]
+        )
 
         # persist + broadcast
         msg = await self._save_message(content, sender)
