@@ -38,7 +38,7 @@
 | ✅ | **Users & Auth** | JWT login / signup, password recovery |
 | ✅ | **Characters** | Full D&D 5e character sheet CRUD |
 | ✅ | **Party & Sessions** | Invite codes, lifecycle management |
-| ✅ | **WebSockets** | Real‑time chat per session with Channels |
+| ✅ | **WebSockets & Chat** | Real-time chat + message history persisted |
 | 🚧 | **AI Dungeon Master** | Gemini integration, context management |
 | 🚧 | **Dice & Rules Engine** | SRD‑accurate dice roller + rule validator |
 | ⏳ | **Content Moderation** | Automatic toxicity detection & session lockdown |
@@ -54,7 +54,7 @@ Legend: ✅ done 🚧 in progress ⏳ planned
 | ----- | ---- |
 | **Runtime** | Python 3.12, Django 4.2, Channels 4, Daphne |
 | **Database** | PostgreSQL 15 |
-| **Realtime** | Redis 7 (pub/sub) |
+| **Realtime** | Redis 7 (pub/sub) + Channels-Redis |
 | **AI** | Google Gemini API |
 | **DevOps** | GitHub Actions, Fly.io |
 | **Observability** | Prometheus, Grafana, Loki |
