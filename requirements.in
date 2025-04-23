@@ -8,3 +8,5 @@ django-filter
 channels
 channels-redis
 daphne
+google-generativeai
+backoff

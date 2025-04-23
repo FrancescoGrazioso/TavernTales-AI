@@ -75,3 +75,11 @@ class Character(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name} (lvl {self.level} {self.char_class})"
+
+    def to_sheet(self) -> str:
+        return (
+            f"{self.name} lvl {self.level} {self.char_class} "
+            f"(HP {self.hp_current}/{self.hp_max}, AC {self.armor_class}, "
+            f"STR {self.strength}, DEX {self.dexterity}, CON {self.constitution}, "
+            f"INT {self.intelligence}, WIS {self.wisdom}, CHA {self.charisma})"
+        )

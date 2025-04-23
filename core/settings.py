@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "characters",
     "channels",
     "game",
+    "ai",
 ]
 
 AUTH_USER_MODEL = "users.User"
