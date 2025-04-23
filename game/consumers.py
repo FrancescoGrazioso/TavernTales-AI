@@ -65,3 +65,6 @@ class SessionChatConsumer(AsyncWebsocketConsumer):
         return ChatMessage.objects.create(
             session=session, sender=sender, content=content
         )
+
+    async def state_patch(self, event):
+        await self.send(text_data=json.dumps(event["message"]))
