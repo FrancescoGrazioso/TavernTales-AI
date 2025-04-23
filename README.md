@@ -14,7 +14,7 @@
 
 ![Python](https://img.shields.io/badge/python-3.12+-blue?logo=python)
 ![Django](https://img.shields.io/badge/Django-4.2-green?logo=django)
-![License](https://img.shields.io/github/license/your‑org/taverntales‑ai)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
 > **TavernTales‑AI** lets a party of players connect, roll dice, and role‑play
 > richly narrated adventures orchestrated by a Large Language Model (Google Gemini).  
@@ -102,7 +102,7 @@ wscat -c ws://127.0.0.1:8000/ws/session/1/
 | Command | Purpose |
 | ------- | ------- |
 | `pytest -q` | run unit & integration tests |
-| `ruff check .` | linting |
+| `black . && ruff check .` | linting |
 | `pip‑compile` | update lockfiles |
 
 Pre‑commit hooks enforce formatting (`black`, `isort`, `ruff`) and tests.
@@ -135,13 +135,13 @@ All contributions are welcome—code, docs, bug reports, and spell‑checks!
 
 ## License 📝
 
-Distributed under the **BSD‑3‑Clause License**.  See `LICENSE` for details.
+Distributed under the **MIT License**.  See `LICENSE` for details.
 
 ---
 
 ## Credits 🙌
 
-* Core devs: Francesco Grazioso · _et alii_
+* Core devs: Francesco Grazioso
 * SRD 5.1 content © Wizards of the Coast (Open Game License 1.0a)
 * This project uses the Google Gemini API (© Google LLM)
 
