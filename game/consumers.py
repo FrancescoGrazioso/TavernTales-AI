@@ -1,7 +1,11 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
+
+from game.models.chat import ChatMessage
+from game.serializers import ChatMessageSerializer
 from .models import Session
+from django.contrib.auth.models import AnonymousUser
 
 
 class SessionChatConsumer(AsyncWebsocketConsumer):
@@ -31,16 +35,29 @@ class SessionChatConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
 
     async def receive(self, text_data):
+        """
+        Expect a JSON payload: {"content": "..."}
+        """
+        data = json.loads(text_data)
+        content = data.get("content", "").strip()
+        if not content:
+            return
+
+        sender = None if isinstance(self.scope["user"], AnonymousUser) else self.scope["user"]
+
+        # persist + broadcast
+        msg = await self._save_message(content, sender)
+        serialized = ChatMessageSerializer(msg).data
         await self.channel_layer.group_send(
-            self.group_name,
-            {
-                "type": "chat.message",
-                "text": text_data,
-                "sender": self.scope["user"].username,
-            },
+            self.group_name, {"type": "chat.message", "message": serialized}
         )
 
     async def chat_message(self, event):
-        await self.send(
-            text_data=json.dumps({"sender": event["sender"], "text": event["text"]})
+        await self.send(text_data=json.dumps(event["message"]))
+
+    @database_sync_to_async
+    def _save_message(self, content, sender):
+        session = Session.objects.get(id=self.session_id)
+        return ChatMessage.objects.create(
+            session=session, sender=sender, content=content
         )

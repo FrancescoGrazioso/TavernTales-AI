@@ -1,6 +1,8 @@
-from rest_framework import viewsets, permissions, decorators, response, status
+from rest_framework import viewsets, permissions, decorators, response, status, mixins
+
+from game.models.chat import ChatMessage
 from .models import Party, Session
-from .serializers import PartySerializer, SessionSerializer
+from .serializers import ChatMessageSerializer, PartySerializer, SessionSerializer
 
 
 class IsOwnerOrMember(permissions.BasePermission):
@@ -43,3 +45,16 @@ class SessionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Session.objects.filter(party__members=self.request.user)
+    
+
+class ChatHistoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    serializer_class = ChatMessageSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    ordering = "-created_at"
+
+    def get_queryset(self):
+        session_id = self.kwargs["session_id"]
+        return ChatMessage.objects.filter(
+            session__id=session_id,
+            session__party__members=self.request.user
+        )

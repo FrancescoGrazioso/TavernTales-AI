@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Party, Session
+
+
+from .models import Party, Session, ChatMessage
 
 
 class PartySerializer(serializers.ModelSerializer):
@@ -22,3 +24,12 @@ class SessionSerializer(serializers.ModelSerializer):
         model = Session
         fields = "__all__"
         read_only_fields = ("id", "started_at", "ended_at")
+
+class ChatMessageSerializer(serializers.ModelSerializer):
+    sender = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = ChatMessage
+        fields = ("id", "session", "sender", "content",
+                  "roll_info", "toxicity_score", "created_at")
+        read_only_fields = fields  # Only server can create
