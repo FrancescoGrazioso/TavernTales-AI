@@ -1,4 +1,4 @@
-# Piano di Progetto Backend – DnD AI
+# Piano di Progetto Backend – TavernTales-AI
 *Versione 1.2 – 19 Aprile 2025*
 
 > Documento completo di **Epiche → Card → Task → Sub‑task** con descrizioni, criteri di accettazione (AC) e stime in story‑points (SP).

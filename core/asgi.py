@@ -1,5 +1,5 @@
 """
-ASGI entrypoint for DnD AI – compatibile con Django + Channels.
+ASGI entrypoint for TavernTales-AI – compatibile con Django + Channels.
 Ordine importante:
 1. Imposta DJANGO_SETTINGS_MODULE
 2. Chiama django.setup()
