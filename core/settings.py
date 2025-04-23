@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-*-b__%m1g5m_+@qwt0drq*5$&6#c2_tm%_*j-+d7)irurte001
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "taverntales-ai.onrender.com"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
