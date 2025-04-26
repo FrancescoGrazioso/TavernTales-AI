@@ -1,21 +1,32 @@
 from textwrap import dedent
 
 from characters.models.character import Character
+from game.models.session import Session
 
-SYSTEM_PROMPT = dedent(
+SCHEMA_BLOCK = dedent(
     """\
-You are TavernTales, an AI Dungeon Master for D&D 5e. 
-Respond as immersive narrative **and** a JSON block:
-{
-  "narrative": "...",
-  "character_updates": { "hp_current": -3, ... }
-}
-Rules: never break JSON schema; do not invent rules beyond SRD.
-"""
+    Return **exactly** this JSON schema (no extra keys):
+
+    {
+      "narrative": string,
+      "character_updates": {
+        "hp_current": int,
+        "hp_max": int,
+        "armor_class": int
+      },
+      "dm_notes": string|null
+    }
+    """
+)
+
+SYSTEM_PROMPT = (
+    "You are TavernTales, an AI Dungeon Master for D&D 5e.\n"
+    + SCHEMA_BLOCK +
+    "\nRules: never break JSON; do not invent rules beyond SRD."
 )
 
 
-def build_prompt(session, player_msg):
+def build_prompt(session: Session, player_msg: str) -> str:
     history = list(session.messages.order_by("-created_at")[:8])
     history_text = "\n".join(
         f"{m.sender.username if m.sender else 'AI'}: {m.content}"
@@ -29,9 +40,13 @@ def build_prompt(session, player_msg):
         if not char:
             raise ValueError("No character found for sender")
 
+    story_so_far = (session.summary + "\n") if session.summary else ""
+
     return (
         SYSTEM_PROMPT
-        + "\n===History===\n"
+        + "\n===Story so far===\n"
+        + story_so_far
+        + "===Recent turns===\n"
         + history_text
         + "\n===Character===\n"
         + char.to_sheet()

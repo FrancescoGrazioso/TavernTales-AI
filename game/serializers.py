@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-
-from .models import Party, Session, ChatMessage
+from .models import ChatMessage, Party, Session
 
 
 class PartySerializer(serializers.ModelSerializer):

@@ -1,15 +1,17 @@
 import json
+
 import pytest
+from asgiref.sync import sync_to_async
+from channels.testing import WebsocketCommunicator
+from django.test import override_settings
 from django.urls import reverse
 from rest_framework.test import APIClient
-from channels.testing import WebsocketCommunicator
-from core.asgi import application
-from users.models import User
-from characters.models import Character
-from game.models import Party, Session
+
 from ai.views import GeminiClient
-from asgiref.sync import sync_to_async
-from django.test import override_settings
+from characters.models import Character
+from core.asgi import application
+from game.models import Party, Session
+from users.models import User
 
 
 @pytest.fixture(autouse=True)

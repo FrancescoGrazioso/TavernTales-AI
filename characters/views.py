@@ -1,4 +1,5 @@
-from rest_framework import viewsets, permissions, filters
+from rest_framework import filters, permissions, viewsets
+
 from .models import Character
 from .serializers import CharacterSerializer
 

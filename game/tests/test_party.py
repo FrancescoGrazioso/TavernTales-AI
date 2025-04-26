@@ -1,7 +1,8 @@
 import pytest
 from rest_framework.test import APIClient
-from users.models import User
+
 from game.models import Party
+from users.models import User
 
 
 @pytest.fixture

@@ -7,15 +7,17 @@ Ordine importante:
 """
 
 import os
+
 import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
+from channels.auth import AuthMiddlewareStack
 # ruff: noqa: E402  # imports after django.setup() sono necessari
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.auth import AuthMiddlewareStack
 from django.core.asgi import get_asgi_application
+
 from game.routing import websocket_urlpatterns
 
 application = ProtocolTypeRouter(

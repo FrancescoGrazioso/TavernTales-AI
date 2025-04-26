@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from game.models.chat import ChatMessage
+
 from .models import Party, Session
 
 

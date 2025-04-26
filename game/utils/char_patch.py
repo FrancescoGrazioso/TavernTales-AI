@@ -1,4 +1,5 @@
 from django.db import transaction
+
 from characters.models import Character
 
 ALLOWED_FIELDS = {

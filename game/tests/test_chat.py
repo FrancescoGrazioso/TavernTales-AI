@@ -1,11 +1,13 @@
 import json
+
 import pytest
 from asgiref.sync import sync_to_async
 from channels.testing import WebsocketCommunicator
-from core.asgi import application
-from users.models import User
-from game.models import Party, Session, ChatMessage
 from django.test import override_settings
+
+from core.asgi import application
+from game.models import ChatMessage, Party, Session
+from users.models import User
 
 
 @pytest.mark.asyncio

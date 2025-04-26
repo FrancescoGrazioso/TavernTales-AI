@@ -17,7 +17,7 @@ class Session(models.Model):
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
     )
     ai_context_id = models.CharField(max_length=100, blank=True)
-    summary_cache = models.TextField(blank=True)
+    summary = models.TextField(blank=True, default="")
     started_at = models.DateTimeField(null=True, blank=True)
     ended_at = models.DateTimeField(null=True, blank=True)
 

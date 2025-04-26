@@ -1,12 +1,13 @@
 import pytest
+from asgiref.sync import sync_to_async
+from django.test import override_settings
 from django.urls import reverse
 from rest_framework.test import APIClient
-from characters.models.character import Character
-from users.models import User
-from game.models import Party, Session
+
 from ai.views import GeminiClient
-from django.test import override_settings
-from asgiref.sync import sync_to_async
+from characters.models.character import Character
+from game.models import Party, Session
+from users.models import User
 
 
 @pytest.fixture(autouse=True)

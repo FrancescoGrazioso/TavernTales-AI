@@ -1,16 +1,19 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, permissions
-from django.shortcuts import get_object_or_404
-from characters.models.character import Character
-from game.models import Session
-from .services import GeminiClient
-from .prompt import build_prompt
 import json
-from channels.layers import get_channel_layer
+
 from asgiref.sync import async_to_sync
-from game.utils.char_patch import apply_character_updates, CharacterPatchError
-from game.models import ChatMessage
+from channels.layers import get_channel_layer
+from django.db import transaction
+from django.shortcuts import get_object_or_404
+from rest_framework import permissions, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from characters.models.character import Character
+from game.models import ChatMessage, Session
+from game.utils.char_patch import CharacterPatchError, apply_character_updates
+
+from .prompt import build_prompt
+from .services import GeminiClient
 
 
 class AiActionView(APIView):
@@ -58,4 +61,22 @@ class AiActionView(APIView):
         }
         async_to_sync(channel_layer.group_send)(f"session_{session.id}", payload)
 
+        self._refresh_summary(session, parsed["narrative"])
+
         return Response(parsed, status=status.HTTP_200_OK)
+    
+    def _refresh_summary(self, session: Session, latest_narrative: str) -> None:
+        """Ask Gemini to compress story so far; fallback to append."""
+        summary_prompt = (
+            "Summarize the adventure so far in <500 tokens, bullet points.\n\n"
+            f"===Previous summary===\n{session.summary}\n\n"
+            f"===Latest narrative===\n{latest_narrative}\n"
+        )
+        try:
+            new_summary = GeminiClient().chat(summary_prompt).strip()[:2000]
+        except Exception:
+            new_summary = (session.summary + "\n" + latest_narrative).strip()[:2000]
+
+        # commit inside atomic block to avoid race conditions
+        with transaction.atomic():
+            Session.objects.filter(id=session.id).update(summary=new_summary)

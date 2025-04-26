@@ -1,11 +1,13 @@
 import json
-from channels.generic.websocket import AsyncWebsocketConsumer
+
 from channels.db import database_sync_to_async
+from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth.models import AnonymousUser
 
 from game.models.chat import ChatMessage
 from game.serializers import ChatMessageSerializer
+
 from .models import Session
-from django.contrib.auth.models import AnonymousUser
 
 
 class SessionChatConsumer(AsyncWebsocketConsumer):
