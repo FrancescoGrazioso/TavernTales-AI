@@ -92,6 +92,8 @@ grpcio==1.72.0rc1
     #   grpcio-status
 grpcio-status==1.71.0
     # via google-api-core
+gunicorn==23.0.0
+    # via -r requirements.in
 httplib2==0.22.0
     # via
     #   google-api-python-client
@@ -109,6 +111,8 @@ incremental==24.7.2
     # via twisted
 msgpack==1.1.0
     # via channels-redis
+packaging==25.0
+    # via gunicorn
 proto-plus==1.26.1
     # via
     #   google-ai-generativelanguage
@@ -177,6 +181,8 @@ uritemplate==4.1.1
     # via google-api-python-client
 urllib3==2.4.0
     # via requests
+whitenoise==6.9.0
+    # via -r requirements.in
 zope-interface==7.2
     # via twisted
 

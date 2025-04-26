@@ -10,3 +10,5 @@ channels-redis
 daphne
 google-generativeai
 backoff
+whitenoise
+gunicorn
