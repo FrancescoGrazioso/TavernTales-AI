@@ -40,3 +40,16 @@ class ChatMessageSerializer(serializers.ModelSerializer):
             "created_at",
         )
         read_only_fields = fields  # Only server can create
+
+
+class DiceRollSerializer(serializers.Serializer):
+    expression = serializers.CharField()
+    advantage = serializers.BooleanField(default=False)
+    disadvantage = serializers.BooleanField(default=False)
+
+    def validate(self, data):
+        if data["advantage"] and data["disadvantage"]:
+            raise serializers.ValidationError(
+                "Cannot set both advantage and disadvantage"
+            )
+        return data

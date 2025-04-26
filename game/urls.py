@@ -1,8 +1,15 @@
-from rest_framework.routers import SimpleRouter
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
 
-from .views import ChatHistoryViewSet, JoinPartyView, PartyViewSet, SessionViewSet
+from .views import (
+    ChatHistoryViewSet,
+    JoinPartyView,
+    PartyViewSet,
+    SessionViewSet,
+    dice_roll,
+)
 
-router = SimpleRouter()
+router = DefaultRouter()
 router.register("parties", PartyViewSet, basename="party")
 router.register("parties", JoinPartyView, basename="party-join")
 router.register("sessions", SessionViewSet, basename="session")
@@ -12,4 +19,7 @@ router.register(
     basename="chat-history",
 )
 
-urlpatterns = router.urls
+urlpatterns = [
+    path("", include(router.urls)),
+    path("dice/roll/", dice_roll, name="dice-roll"),
+]

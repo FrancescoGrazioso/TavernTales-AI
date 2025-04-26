@@ -1,9 +1,17 @@
+from requests import Response
 from rest_framework import decorators, mixins, permissions, response, status, viewsets
+from rest_framework.decorators import api_view, permission_classes
 
 from game.models.chat import ChatMessage
+from game.utils.dice import DiceError, roll
 
 from .models import Party, Session
-from .serializers import ChatMessageSerializer, PartySerializer, SessionSerializer
+from .serializers import (
+    ChatMessageSerializer,
+    DiceRollSerializer,
+    PartySerializer,
+    SessionSerializer,
+)
 
 
 class IsOwnerOrMember(permissions.BasePermission):
@@ -58,3 +66,27 @@ class ChatHistoryViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return ChatMessage.objects.filter(
             session__id=session_id, session__party__members=self.request.user
         )
+
+
+@api_view(["POST"])
+@permission_classes([permissions.IsAuthenticated])
+def dice_roll(request):
+    ser = DiceRollSerializer(data=request.data)
+    ser.is_valid(raise_exception=True)
+    try:
+        result = roll(
+            ser.validated_data["expression"],
+            ser.validated_data["advantage"],
+            ser.validated_data["disadvantage"],
+        )
+    except DiceError as e:
+        return Response({"error": str(e)}, status=400)
+
+    return Response(
+        {
+            "total": result.total,
+            "rolls": result.rolls,
+            "kept": result.kept,
+        },
+        status=200,
+    )
