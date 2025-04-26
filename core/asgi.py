@@ -14,6 +14,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 django.setup()
 
 from channels.auth import AuthMiddlewareStack
+
 # ruff: noqa: E402  # imports after django.setup() sono necessari
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application

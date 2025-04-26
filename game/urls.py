@@ -1,7 +1,6 @@
 from rest_framework.routers import SimpleRouter
 
-from .views import (ChatHistoryViewSet, JoinPartyView, PartyViewSet,
-                    SessionViewSet)
+from .views import ChatHistoryViewSet, JoinPartyView, PartyViewSet, SessionViewSet
 
 router = SimpleRouter()
 router.register("parties", PartyViewSet, basename="party")

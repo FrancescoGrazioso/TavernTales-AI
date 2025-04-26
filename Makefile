@@ -3,6 +3,6 @@
 .PHONY: quality
 
 quality:
+	isort .
 	black .
 	ruff check --fix
-	isort .
