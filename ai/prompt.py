@@ -21,8 +21,8 @@ SCHEMA_BLOCK = dedent(
 
 SYSTEM_PROMPT = (
     "You are TavernTales, an AI Dungeon Master for D&D 5e.\n"
-    + SCHEMA_BLOCK +
-    "\nRules: never break JSON; do not invent rules beyond SRD."
+    + SCHEMA_BLOCK
+    + "\nRules: never break JSON; do not invent rules beyond SRD."
 )
 
 

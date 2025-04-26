@@ -1,11 +1,9 @@
-from rest_framework import (decorators, mixins, permissions, response, status,
-                            viewsets)
+from rest_framework import decorators, mixins, permissions, response, status, viewsets
 
 from game.models.chat import ChatMessage
 
 from .models import Party, Session
-from .serializers import (ChatMessageSerializer, PartySerializer,
-                          SessionSerializer)
+from .serializers import ChatMessageSerializer, PartySerializer, SessionSerializer
 
 
 class IsOwnerOrMember(permissions.BasePermission):

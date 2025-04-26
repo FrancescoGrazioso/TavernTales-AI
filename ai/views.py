@@ -64,7 +64,7 @@ class AiActionView(APIView):
         self._refresh_summary(session, parsed["narrative"])
 
         return Response(parsed, status=status.HTTP_200_OK)
-    
+
     def _refresh_summary(self, session: Session, latest_narrative: str) -> None:
         """Ask Gemini to compress story so far; fallback to append."""
         summary_prompt = (
