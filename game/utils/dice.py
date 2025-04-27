@@ -63,9 +63,22 @@ def roll(expr: str, advantage: bool = False, disadvantage: bool = False) -> Roll
         kept = _apply_keep_drop(rolls.copy(), keep_drop)
         return RollResult(sum(kept) + mod, rolls, kept)
 
-    r1 = single_roll()
+    # --- Advantage / Disadvantage ----------------------------------------
+    if advantage and disadvantage:
+        raise DiceError("Cannot have both advantage and disadvantage")
+
     if advantage or disadvantage:
-        r2 = single_roll()
-        chosen = max if advantage else min
-        return chosen([r1, r2], key=lambda r: r.total)
-    return r1
+        # Rules as per D&D 5e: only valid for a single d20 roll
+        if cnt != 1 or sides != 20 or keep_drop:
+            raise DiceError("Advantage/Disadvantage only supported for plain 1d20")
+
+        first = random.randint(1, sides)
+        second = random.randint(1, sides)
+        kept_val = max(first, second) if advantage else min(first, second)
+        rolls = [first, second]
+        kept = [kept_val]
+        total = kept_val + mod
+        return RollResult(total, rolls, kept)
+
+    # --- Standard roll ----------------------------------------------------
+    return single_roll()

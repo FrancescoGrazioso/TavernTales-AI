@@ -33,8 +33,8 @@ def apply_character_updates(char: Character, patch: dict) -> dict:
 
             current = getattr(char, field)
             if field_type is int and isinstance(value, int):
-                # treat negative/positive as delta, others as absolute
-                new_val = current + value if value < 0 or value > current else value
+                # Updated logic: treat all values as absolute unless explicitly negative
+                new_val = current + value if value < 0 else value
             else:
                 new_val = value
 

@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
@@ -64,6 +65,14 @@ class Character(models.Model):
 
     proficiency_bonus = models.SmallIntegerField(default=2)
     passive_perception = models.SmallIntegerField(default=10)
+
+    # condizioni dinamiche
+    conditions = ArrayField(
+        models.CharField(max_length=50),
+        default=list,
+        blank=True,
+        help_text="Lista di condizioni attive sul personaggio.",
+    )
 
     # timestamp utili
     created_at = models.DateTimeField(auto_now_add=True)
