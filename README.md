@@ -14,7 +14,7 @@
 ![Python](https://img.shields.io/badge/python-3.12+-blue?logo=python)
 ![Django](https://img.shields.io/badge/Django-4.2-green?logo=django)
 ![License](https://img.shields.io/badge/license-MIT-blue)
-![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)
+![Coverage](https://img.shields.io/badge/coverage-87%25-brightgreen)
 
 > **TavernTales‑AI** lets a party of players connect, roll dice, and role‑play
 > richly narrated adventures orchestrated by a Large Language Model (Google Gemini).  
