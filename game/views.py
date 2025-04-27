@@ -1,6 +1,11 @@
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from django.shortcuts import get_object_or_404
+from django_fsm import can_proceed
 from requests import Response
 from rest_framework import decorators, mixins, permissions, response, status, viewsets
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.views import APIView
 
 from game.models.chat import ChatMessage
 from game.utils.dice import DiceError, roll
@@ -11,6 +16,7 @@ from .serializers import (
     DiceRollSerializer,
     PartySerializer,
     SessionSerializer,
+    SessionStateSerializer,
 )
 
 
@@ -90,3 +96,43 @@ def dice_roll(request):
         },
         status=200,
     )
+
+
+class SessionLifecycleView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, session_id, action):
+        session = get_object_or_404(Session, id=session_id, party__owner=request.user)
+
+        if action == "start":
+            if not can_proceed(session.start):
+                return Response({"detail": "Cannot start"}, status=400)
+            session.initiative = request.data.get("initiative", [])
+            session.start()
+        elif action == "pause":
+            if not can_proceed(session.pause):
+                return Response({"detail": "Cannot pause"}, status=400)
+            session.pause()
+        elif action == "resume":
+            if not can_proceed(session.resume):
+                return Response({"detail": "Cannot resume"}, status=400)
+            session.resume()
+        elif action == "finish":
+            if not can_proceed(session.finish):
+                return Response({"detail": "Cannot finish"}, status=400)
+            session.finish()
+        elif action == "next-turn":
+            if session.status != "active":
+                return Response({"detail": "Not active"}, status=400)
+            session.advance_turn()
+        else:
+            return Response({"detail": "Unknown action"}, status=404)
+
+        session.save()
+        # broadcast state via WS
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            f"session_{session.id}",
+            {"type": "state.patch", "message": SessionStateSerializer(session).data},
+        )
+        return Response(SessionStateSerializer(session).data)

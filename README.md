@@ -39,7 +39,7 @@
 | ✅ | **Characters** | Full D&D 5e character sheet CRUD |
 | ✅ | **Party & Sessions** | Invite codes, lifecycle management |
 | ✅ | **WebSockets & Chat** | Real-time chat + message history persisted |
-| 🚧 | **AI Dungeon Master** | Gemini integration, context management |
+| ✅ | **AI Dungeon Master** | Gemini integration, context management |
 | 🚧 | **Dice & Rules Engine** | SRD‑accurate dice roller + rule validator |
 | ⏳ | **Content Moderation** | Automatic toxicity detection & session lockdown |
 | ⏳ | **Admin Dashboard** | Live metrics, cost tracking, role‑based access |

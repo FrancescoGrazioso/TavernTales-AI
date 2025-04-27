@@ -25,6 +25,13 @@ class SessionSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "started_at", "ended_at")
 
 
+class SessionStateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Session
+        fields = ("id", "status", "initiative", "current_turn")
+        read_only_fields = fields
+
+
 class ChatMessageSerializer(serializers.ModelSerializer):
     sender = serializers.StringRelatedField(read_only=True)
 
